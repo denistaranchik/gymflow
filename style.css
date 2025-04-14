@@ -1,0 +1,29 @@
+#grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 800px;
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    border: 2px solid black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.green {
+    background-color: green;
+}
+.yellow {
+    background-color: yellow;
+}
+.red {
+    background-color: red;
+}
