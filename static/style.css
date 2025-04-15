@@ -1,29 +1,54 @@
-#grid {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    max-width: 800px;
+body {
+    font-family: sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
 }
-
-.cell {
-    width: 80px;
-    height: 80px;
-    border: 2px solid black;
-    cursor: pointer;
+h1 {
+    text-align: center;
+}
+.container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    transition: background-color 0.3s;
+    align-items: flex-start;
+    gap: 40px;
 }
-
-.green {
-    background-color: green;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(17, 30px);
+    gap: 5px;
 }
-.yellow {
-    background-color: yellow;
+.cell {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #999;
+    cursor: pointer;
+    background: green;
+    color: white;
+    font-size: 12px;
 }
-.red {
-    background-color: red;
+.cell.red { background: red; }
+.cell.yellow { background: gold; color: black; }
+.cell.green { background: green; }
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.block {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+.suggestion {
+    font-size: 24px;
+    text-align: center;
+    margin: 10px 0;
+}
+.btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
 }
