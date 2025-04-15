@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Crowd free locker manager</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Crowd free locker manager</h1>
-    <div class="container">
-        <div id="grid" class="grid"></div>
-        <div class="panel">
-            <div class="block">
-                <h3>Наступна вільна шафка:</h3>
-                <div id="suggestion" class="suggestion">...</div>
-                <button id="issue" class="btn">✓ Номер видано</button>
-            </div>
-            <div class="block">
-                <h3>Повернути номер:</h3>
-                <form id="return-form">
-                    <input type="number" name="number" min="1" max="153" required>
-                    <button type="submit" class="btn">OK</button>
-                </form>
-            </div>
-        </div>
+
+    <div id="lockers" class="grid-container">
+        <div class="column" id="col-1"></div>
+        <div class="column" id="col-2"></div>
+        <div class="column" id="col-3"></div>
+        <div class="column" id="col-4"></div>
     </div>
-    <script src="/static/script.js"></script>
+
+    <div class="info-panel">
+        <h3>Наступна вільна шафка:</h3>
+        <div id="next-suggestion">...</div>
+        <button id="confirm-button">Номер видано</button>
+    </div>
+
+    <div class="return-panel">
+        <h3>Повернути номер:</h3>
+        <input type="number" id="return-input" min="1" max="60" placeholder="Введіть номер">
+        <button id="return-button">OK</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
