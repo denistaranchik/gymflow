@@ -1,54 +1,63 @@
 body {
-    font-family: sans-serif;
-    background: #f4f4f4;
-    padding: 20px;
-}
-h1 {
+    font-family: Arial, sans-serif;
     text-align: center;
+    margin: 20px;
 }
-.container {
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.grid-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
+    gap: 20px;
+    margin-bottom: 30px;
 }
-.grid {
-    display: grid;
-    grid-template-columns: repeat(17, 30px);
+
+.column {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
     gap: 5px;
 }
+
 .cell {
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    border: 1px solid #999;
-    cursor: pointer;
-    background: green;
-    color: white;
-    font-size: 12px;
-}
-.cell.red { background: red; }
-.cell.yellow { background: gold; color: black; }
-.cell.green { background: green; }
-.panel {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-.block {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
     border: 1px solid #ccc;
+    cursor: pointer;
+    user-select: none;
 }
-.suggestion {
-    font-size: 24px;
+
+.green {
+    background-color: lightgreen;
+}
+
+.yellow {
+    background-color: gold;
+}
+
+.red {
+    background-color: lightcoral;
+}
+
+.info-panel, .return-panel {
+    margin: 20px auto;
+    border: 1px solid #aaa;
+    padding: 10px;
+    width: 200px;
     text-align: center;
+}
+
+#next-suggestion {
+    font-size: 24px;
     margin: 10px 0;
 }
-.btn {
-    width: 100%;
-    padding: 10px;
+
+button {
+    padding: 5px 15px;
     font-size: 16px;
+    cursor: pointer;
 }

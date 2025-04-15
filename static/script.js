@@ -1,48 +1,69 @@
-function loadGrid() {
-    fetch('/get_state')
-        .then(res => res.json())
-        .then(data => {
-            const grid = document.getElementById('grid');
-            grid.innerHTML = '';
-            data.cells.forEach((cell, i) => {
-                const div = document.createElement('div');
-                div.className = `cell ${cell.color}`;
-                div.textContent = i + 1;
-                div.onclick = () => {
-                    fetch(`/click/${i}`, { method: 'POST' })
-                        .then(() => loadGrid());
-                };
-                grid.appendChild(div);
+document.addEventListener("DOMContentLoaded", function() {
+    const suggestion = document.getElementById("next-suggestion");
+    const confirmBtn = document.getElementById("confirm-button");
+    const returnBtn = document.getElementById("return-button");
+    const returnInput = document.getElementById("return-input");
+    let state = [];
+    let suggestedIndex = null;
+
+    function updateGrid() {
+        fetch('/get_state')
+            .then(response => response.json())
+            .then(data => {
+                state = data.cells;
+                suggestedIndex = data.suggested;
+                suggestion.textContent = suggestedIndex !== null ? (suggestedIndex + 1) : 'Немає';
+
+                ['col-1', 'col-2', 'col-3', 'col-4'].forEach(col => {
+                    document.getElementById(col).innerHTML = '';
+                });
+
+                const columns = [
+                    Array.from({length: 15}, (_, i) => i),
+                    Array.from({length: 15}, (_, i) => i + 15),
+                    Array.from({length: 15}, (_, i) => i + 30),
+                    Array.from({length: 15}, (_, i) => i + 45)
+                ];
+
+                columns.forEach((arr, idx) => {
+                    const colDiv = document.getElementById(`col-${idx + 1}`);
+                    arr.slice().reverse().forEach(index => {
+                        const cell = state[index];
+                        const div = document.createElement("div");
+                        div.className = "cell " + cell.color;
+                        div.textContent = index + 1;
+                        div.onclick = () => clickCell(index);
+                        colDiv.appendChild(div);
+                    });
+                });
             });
-            const suggestion = data.suggested !== null ? data.suggested + 1 : 'Всі зайняті';
-            document.getElementById('suggestion').textContent = suggestion;
-        });
-}
+    }
 
-document.getElementById('issue').onclick = () => {
-    fetch('/get_state')
-        .then(res => res.json())
-        .then(data => {
-            const suggested = data.suggested;
-            if (suggested !== null) {
-                fetch(`/click/${suggested}`, { method: 'POST' })
-                    .then(() => loadGrid());
-            }
-        });
-};
+    function clickCell(index) {
+        fetch('/click/' + index, {method: 'POST'})
+            .then(() => updateGrid());
+    }
 
-document.getElementById('return-form').onsubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    fetch('/return_number', {
-        method: 'POST',
-        body: formData
-    }).then(() => {
-        e.target.reset();
-        loadGrid();
-    });
-};
+    confirmBtn.onclick = function() {
+        if (suggestedIndex !== null) {
+            clickCell(suggestedIndex);
+        }
+    };
 
-loadGrid();
-setInterval(loadGrid, 5000);
+    returnBtn.onclick = function() {
+        const num = parseInt(returnInput.value);
+        if (!isNaN(num) && num >= 1 && num <= 60) {
+            fetch('/return/' + (num - 1), {method: 'POST'})
+                .then(() => {
+                    returnInput.value = '';
+                    updateGrid();
+                });
+        } else {
+            alert('Введіть коректний номер від 1 до 60');
+        }
+    };
+
+    updateGrid();
+    setInterval(updateGrid, 5000);
+});
 
