@@ -1,34 +1,48 @@
-const grid = document.getElementById("grid");
-const suggestion = document.getElementById("suggestion");
-
-function render(data) {
-    const cells = data.cells;
-    const suggested = data.suggested;
-
-    grid.innerHTML = "";
-    cells.forEach((cell, i) => {
-        const div = document.createElement("div");
-        div.classList.add("cell", cell.color);
-        div.innerText = i + 1;
-        div.addEventListener("click", () => {
-            fetch(`/click/${i}`, { method: "POST" })
-                .then(() => update());
-        });
-        grid.appendChild(div);
-    });
-
-    if (suggested !== null) {
-        suggestion.innerText = `Підказка: обери комірку № ${suggested}`;
-    } else {
-        suggestion.innerText = "Всі комірки вже обрані.";
-    }
-}
-
-function update() {
-    fetch("/get_state")
+function loadGrid() {
+    fetch('/get_state')
         .then(res => res.json())
-        .then(data => render(data));
+        .then(data => {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            data.cells.forEach((cell, i) => {
+                const div = document.createElement('div');
+                div.className = `cell ${cell.color}`;
+                div.textContent = i + 1;
+                div.onclick = () => {
+                    fetch(`/click/${i}`, { method: 'POST' })
+                        .then(() => loadGrid());
+                };
+                grid.appendChild(div);
+            });
+            const suggestion = data.suggested !== null ? data.suggested + 1 : 'Всі зайняті';
+            document.getElementById('suggestion').textContent = suggestion;
+        });
 }
 
-setInterval(update, 1000);
-update();
+document.getElementById('issue').onclick = () => {
+    fetch('/get_state')
+        .then(res => res.json())
+        .then(data => {
+            const suggested = data.suggested;
+            if (suggested !== null) {
+                fetch(`/click/${suggested}`, { method: 'POST' })
+                    .then(() => loadGrid());
+            }
+        });
+};
+
+document.getElementById('return-form').onsubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    fetch('/return_number', {
+        method: 'POST',
+        body: formData
+    }).then(() => {
+        e.target.reset();
+        loadGrid();
+    });
+};
+
+loadGrid();
+setInterval(loadGrid, 5000);
+

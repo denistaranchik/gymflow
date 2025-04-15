@@ -2,13 +2,28 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Комірки</title>
+    <title>Crowd free locker manager</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h2>Натисни на комірку</h2>
-    <div id="suggestion">Підказка: обери комірку...</div>
-    <div id="grid"></div>
+    <h1>Crowd free locker manager</h1>
+    <div class="container">
+        <div id="grid" class="grid"></div>
+        <div class="panel">
+            <div class="block">
+                <h3>Наступна вільна шафка:</h3>
+                <div id="suggestion" class="suggestion">...</div>
+                <button id="issue" class="btn">✓ Номер видано</button>
+            </div>
+            <div class="block">
+                <h3>Повернути номер:</h3>
+                <form id="return-form">
+                    <input type="number" name="number" min="1" max="153" required>
+                    <button type="submit" class="btn">OK</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="/static/script.js"></script>
 </body>
 </html>
