@@ -2,31 +2,39 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Crowd free locker manager</title>
+    <title>Crowd Free Locker Manager</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Crowd free locker manager</h1>
 
-    <div id="lockers" class="grid-container">
-        <div class="column" id="col-1"></div>
-        <div class="column" id="col-2"></div>
-        <div class="column" id="col-3"></div>
-        <div class="column" id="col-4"></div>
-    </div>
+    <h1>Crowd Free Locker Manager</h1>
 
-    <div class="info-panel">
-        <h3>Наступна вільна шафка:</h3>
-        <div id="next-suggestion">...</div>
-        <button id="confirm-button">Номер видано</button>
-    </div>
+    <div class="main-container">
 
-    <div class="return-panel">
-        <h3>Повернути номер:</h3>
-        <input type="number" id="return-input" min="1" max="60" placeholder="Введіть номер">
-        <button id="return-button">OK</button>
+        <div id="lockers" class="grid-container">
+            <div class="column" id="col-1"></div>
+            <div class="column" id="col-2"></div>
+            <div class="column" id="col-3"></div>
+            <div class="column" id="col-4"></div>
+        </div>
+
+        <div class="sidebar">
+            <div class="info-panel">
+                <h3>Наступна вільна шафка:</h3>
+                <div id="next-suggestion">...</div>
+                <button id="confirm-button">Номер видано</button>
+            </div>
+
+            <div class="return-panel">
+                <h3>Повернути номер:</h3>
+                <input type="number" id="return-input" min="1" max="60" placeholder="Введіть номер">
+                <button id="return-button">OK</button>
+            </div>
+        </div>
+
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>
