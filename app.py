@@ -57,10 +57,15 @@ def click(index):
 def suggest_next():
     if last_clicked is None:
         return 0
-    distances = [(i, abs(i - last_clicked)) for i, c in enumerate(cells) if c["color"] != "red"]
+    # Вибираємо тільки зелені комірки
+    distances = [
+        (i, abs(i - last_clicked))
+        for i, c in enumerate(cells)
+        if c["color"] == "green"
+    ]
     if not distances:
         return None
-    distances.sort(key=lambda x: -x[1])
+    distances.sort(key=lambda x: -x[1])  # Найдальша від останньої
     return distances[0][0]
 
 if __name__ == '__main__':
